@@ -1,12 +1,11 @@
-import 'package:flutter_test/flutter_test.dart';
-
+import 'package:logify/interfaces/storage_adapter.dart';
+import 'package:logify/interfaces/sync_adapter.dart';
 import 'package:logify/logify.dart';
+import 'package:logify/storage_adapters/sqlite_storage_adapter.dart';
+import 'package:logify/sync_adapters/alarm_manager_sync_adapter.dart';
 
 void main() {
-  test('adds one to input values', () {
-    final calculator = Calculator();
-    expect(calculator.addOne(2), 3);
-    expect(calculator.addOne(-7), -6);
-    expect(calculator.addOne(0), 1);
-  });
+  StorageAdapter storageAdapter = SQLiteStorageAdapter();
+  SyncAdapter syncAdapter = AlarmManagerSyncAdapter();
+  Logify.init(storageAdapter, syncAdapter);
 }
