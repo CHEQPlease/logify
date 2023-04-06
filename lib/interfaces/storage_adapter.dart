@@ -7,12 +7,12 @@ abstract class StorageAdapter {
   /// Insert a new log into the storage
   Future<void> set(
     String tag,
-    dynamic value,
-    String logTime, {
-    LogLevel logLevel = LogLevel.info,
-    String fileName = "",
-    String functionName = "",
-    int? lineNumber,
+    dynamic value, {
+    required LogLevel logLevel,
+    required String logTime,
+    required String fileName,
+    required int lineNumber,
+    required String functionName,
   });
   // Clear storage
   Future<void> clear();

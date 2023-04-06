@@ -2,6 +2,7 @@ library logify;
 
 import 'package:logify/interfaces/storage_adapter.dart';
 import 'package:logify/interfaces/sync_adapter.dart';
+import 'package:logify/utils/stack_trace_parser.dart';
 
 class Logify {
   late final StorageAdapter _storageAdapter;
@@ -15,5 +16,31 @@ class Logify {
     _instance ??= Logify._internal(storageAdapter, syncAdapter);
     await _instance!._storageAdapter.init();
     await _instance!._syncAdapter.init();
+  }
+
+  static void log(
+    dynamic message, {
+    String tag = '',
+    LogLevel logLevel = LogLevel.info,
+  }) {
+    try {
+      if (_instance == null) {
+        throw('Logify is not initialized');
+      }
+      
+      StackTraceParser stackTraceParser = StackTraceParser(StackTrace.current);
+
+      _instance!._storageAdapter.set(
+        tag,
+        message,
+        logLevel: logLevel,
+        logTime: DateTime.now().toIso8601String(),
+        fileName: stackTraceParser.fileName,
+        lineNumber: stackTraceParser.lineNumber,
+        functionName: stackTraceParser.functionName,
+      );
+    } catch (e) {
+      throw('Logify error: $e');
+    }
   }
 }

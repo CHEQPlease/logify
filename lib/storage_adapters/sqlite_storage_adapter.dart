@@ -12,7 +12,15 @@ class SQLiteStorageAdapter implements StorageAdapter {
   }
   
   @override
-  Future<void> set(String tag, value, String logTime, {LogLevel logLevel = LogLevel.info, String fileName = "", String functionName = "", int? lineNumber}) {
+  Future<void> set(
+    String tag,
+    dynamic value, {
+    required LogLevel logLevel,
+    required String logTime,
+    required String fileName,
+    required int lineNumber,
+    required String functionName,
+  }) {
     throw UnimplementedError();
   }
 
