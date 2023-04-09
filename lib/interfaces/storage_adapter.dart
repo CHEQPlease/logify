@@ -1,3 +1,5 @@
+import 'package:logify/storage_adapters/sqlite_storage_adapter.dart';
+
 /// An abstract interface for save logs to storage
 abstract class StorageAdapter {
   /// Initialize the storage adapter
@@ -5,7 +7,7 @@ abstract class StorageAdapter {
   /// Open connection to the storage
   Future<void> open();
   /// Insert a new log into the storage
-  Future<void> set(
+  Future<void> insert(
     String tag,
     dynamic value, {
     required LogLevel logLevel,
@@ -14,8 +16,14 @@ abstract class StorageAdapter {
     required int lineNumber,
     required String functionName,
   });
-  // Clear storage
+  /// Get out of sync logs from the storage
+  Future<void> getOutOfSync();
+  /// Update logs as synced in the storage
+  Future<void> updateAsSynced(RangeIndex? rangeIndex);
+  /// Clear storage
   Future<void> clear();
+  /// Clear synced logs from the storage
+  Future<void> clearSynced();
   /// Close connection to the storage
   Future<void> close();
 }

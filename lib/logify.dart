@@ -30,7 +30,7 @@ class Logify {
       
       StackTraceParser stackTraceParser = StackTraceParser(StackTrace.current);
 
-      _instance!._storageAdapter.set(
+      _instance!._storageAdapter.insert(
         tag,
         message,
         logLevel: logLevel,
