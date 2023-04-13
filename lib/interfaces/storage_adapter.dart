@@ -9,7 +9,7 @@ abstract class StorageAdapter {
   /// Insert a new log into the storage
   Future<void> insert(
     String tag,
-    dynamic value, {
+    dynamic message, {
     required LogLevel logLevel,
     required String logTime,
     required String fileName,

@@ -42,7 +42,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
   @override
   Future<void> insert(
     String tag,
-    dynamic value, {
+    dynamic message, {
     required LogLevel logLevel,
     required String logTime,
     required String fileName,
@@ -56,7 +56,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
         _logTableName,
         {
           'tag': tag,
-          'message': value.toString(),
+          'message': message.toString(),
           'log_level': logLevel.toString(),
           'log_time': logTime,
           'file_name': fileName,
