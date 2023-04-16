@@ -2,6 +2,7 @@ library logify;
 
 import 'package:logify/interfaces/storage_adapter.dart';
 import 'package:logify/interfaces/sync_adapter.dart';
+import 'package:logify/models/log_list.dart';
 import 'package:logify/utils/stack_trace_parser.dart';
 
 class Logify {
@@ -12,10 +13,10 @@ class Logify {
 
   static Logify? _instance;
 
-  static Future<void> init(StorageAdapter storageAdapter, SyncAdapter syncAdapter) async {
+  static Future<void> init(StorageAdapter storageAdapter, SyncAdapter syncAdapter, Duration syncInterval, Function syncCallback) async {
     _instance ??= Logify._internal(storageAdapter, syncAdapter);
     await _instance!._storageAdapter.init();
-    await _instance!._syncAdapter.init();
+    await _instance!._syncAdapter.init(syncInterval, syncCallback);
   }
 
   static void log(
@@ -41,6 +42,43 @@ class Logify {
       );
     } catch (e) {
       throw('Logify error: $e');
+    }
+  }
+
+  static void syncLogs(StorageAdapter storageAdapter, SyncAdapter syncAdapter) {
+    try {
+      if (_instance == null) {
+        _instance = Logify._internal(storageAdapter, syncAdapter);
+        _instance!._storageAdapter.init();
+      }
+      
+      _instance!._syncAdapter.sync();
+    } catch (e) {
+      throw('Logify error: $e');
+    }
+  }
+
+  static Future<List<Log>> getOutOfSyncLogs() async {
+    try {
+      if (_instance == null) {
+        throw('Logify is not initialized');
+      }
+      
+      return await _instance!._storageAdapter.getOutOfSync();
+    } catch (e) {
+      throw('Logify error: $e');
+    }
+  }
+
+  static Future<void> clearSynced() async {
+    try {
+      if (_instance == null) {
+        throw ('Logify is not initialized');
+      }
+
+      return await _instance!._storageAdapter.clearSynced();
+    } catch (e) {
+      throw ('Logify error: $e');
     }
   }
 }

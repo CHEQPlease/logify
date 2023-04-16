@@ -3,7 +3,7 @@
 /// cloudAdapter: The cloud adapter to sync the logs with [FirebaseAdapter] or [ApiAdapter]
 abstract class SyncAdapter {
   /// Initialize the sync adapter
-  Future<void> init();
+  Future<void> init(Duration syncInterval, Function syncCallback);
   /// Sync the logs from storage with cloud
   Future<void> sync();
   /// Clear the synced logs from the storage

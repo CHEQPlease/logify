@@ -1,4 +1,5 @@
 import 'package:logify/interfaces/storage_adapter.dart';
+import 'package:logify/models/log_list.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:sqflite/sqlite_api.dart';
@@ -8,7 +9,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
 
   late final String _dbName;
   late final String _logTableName;
-  late final sql.Database _db;
+  late sql.Database _db;
 
   SQLiteStorageAdapter._internal();
 
@@ -26,10 +27,10 @@ class SQLiteStorageAdapter implements StorageAdapter {
   Future<void> open() async {
     try {
       _db = await sql.openDatabase(
-        join(await sql.getDatabasesPath(), _dbName),
+        join(await sql.getDatabasesPath(), SQLiteConfig.dbName),
         onCreate: (db, version) {
           return db.execute(
-            'CREATE TABLE IF NOT EXISTS $_logTableName (id INTEGER PRIMARY KEY, tag TEXT, message TEXT, log_level TEXT, log_time TEXT, file_name TEXT, line_number INTEGER, function_name TEXT, is_synced INTEGER)',
+            'CREATE TABLE IF NOT EXISTS ${SQLiteConfig.logTableName} (id INTEGER PRIMARY KEY, tag TEXT, message TEXT, log_level TEXT, log_time TEXT, file_name TEXT, line_number INTEGER, function_name TEXT, is_synced INTEGER)',
           );
         },
         version: 1,
@@ -74,11 +75,11 @@ class SQLiteStorageAdapter implements StorageAdapter {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getOutOfSync() async {
+  Future<List<Log>> getOutOfSync() async {
     try {
       await open();
 
-      final List<Map<String, dynamic>> result = await _db.query(
+      final List<Map<String, dynamic>> maps = await _db.query(
         _logTableName,
         where: 'is_synced = ?',
         whereArgs: [0],
@@ -86,7 +87,18 @@ class SQLiteStorageAdapter implements StorageAdapter {
 
       await close();
 
-      return result;
+      return List.generate(maps.length, (i) {
+        return Log(
+            id: maps[i]['id'],
+            tag: maps[i]['tag'],
+            message: maps[i]['message'],
+            logLevel: maps[i]['logLevel'],
+            logTime: maps[i]['logTime'],
+            fileName: maps[i]['fileName'],
+            lineNumber: maps[i]['lineNumber'],
+            functionName: maps[i]['functionName'],
+            isSynced: maps[i]['isSynced']);
+      });
     } catch (e) {
       throw ('Logify, SQLite - $e');
     }

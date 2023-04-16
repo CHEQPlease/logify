@@ -3,5 +3,6 @@
         "firestore",
         "logify",
         "sqflite"
-    ]
+    ],
+    "dart.debugExternalPackageLibraries": true
 }

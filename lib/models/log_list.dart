@@ -26,4 +26,28 @@ class Log {
     this.functionName,
     this.isSynced,
   });
+
+  Map<String, dynamic> uploadServerMap() {
+    return {
+      'tag': tag,
+      'message': message,
+      'logLevel': logLevel,
+      'logTime': logTime,
+      'fileName': fileName,
+      'lineNumber': lineNumber,
+      'functionName': functionName,
+    };
+  }
+}
+
+class LogSyncModel {
+  List<Log>? logList;
+
+  LogSyncModel({this.logList});
+
+  Map<String, dynamic> toJson() => {
+        "logList": logList == null
+            ? null
+            : List<dynamic>.from(logList!.map((x) => x.uploadServerMap()))
+      };
 }
