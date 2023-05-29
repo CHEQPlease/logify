@@ -1,5 +1,6 @@
 library logify;
 
+import 'package:logify/interfaces/cloud_adapter.dart';
 import 'package:logify/interfaces/storage_adapter.dart';
 import 'package:logify/interfaces/sync_adapter.dart';
 import 'package:logify/models/log_list.dart';
@@ -45,14 +46,14 @@ class Logify {
     }
   }
 
-  static void syncLogs(StorageAdapter storageAdapter, SyncAdapter syncAdapter) {
+  static void syncLogs(StorageAdapter storageAdapter, SyncAdapter syncAdapter, CloudAdapter cloudAdapter) {
     try {
       if (_instance == null) {
         _instance = Logify._internal(storageAdapter, syncAdapter);
         _instance!._storageAdapter.init();
       }
       
-      _instance!._syncAdapter.sync();
+      _instance!._syncAdapter.sync(cloudAdapter);
     } catch (e) {
       throw('Logify error: $e');
     }

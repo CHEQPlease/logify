@@ -5,9 +5,7 @@ import 'package:logify/logify.dart';
 
 /// An implementation of [SyncAdapter] to sync logs from storage with cloud using [AndroidAlarmManager]
 class AlarmManagerSyncAdapter extends SyncAdapter {
-  final CloudAdapter _cloudAdapter;
-
-  AlarmManagerSyncAdapter(this._cloudAdapter);
+  AlarmManagerSyncAdapter();
 
   @override
   Future<void> init(Duration syncInterval, Function syncCallback) async {
@@ -21,9 +19,9 @@ class AlarmManagerSyncAdapter extends SyncAdapter {
   }
 
   @override
-  Future<void> sync() async {
+  Future<void> sync(CloudAdapter cloudAdapter) async {
     try {
-      await _cloudAdapter
+      await cloudAdapter
         .sync(await Logify.getOutOfSyncLogs())
         .then((value) async {
       if (value) {
