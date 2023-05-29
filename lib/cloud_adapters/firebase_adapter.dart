@@ -8,7 +8,6 @@ class FirebaseAdapter implements CloudAdapter {
 
   FirebaseAdapter(this.collectionName);
 
-  @override
   init() async {
     try {
       await Firebase.initializeApp();
@@ -41,7 +40,7 @@ class FirebaseAdapter implements CloudAdapter {
       LogSyncModel logSyncModel =
           LogSyncModel(logList: logList);
 
-      return await documentReference
+      await documentReference
           .set(logSyncModel.toJson(), SetOptions(merge: false))
           .whenComplete(() async {})
           .catchError((e) {
