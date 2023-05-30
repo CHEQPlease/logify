@@ -2,6 +2,7 @@ import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:logify/interfaces/cloud_adapter.dart';
 import 'package:logify/interfaces/sync_adapter.dart';
 import 'package:logify/logify.dart';
+import 'package:logify/models/log_list.dart';
 
 /// An implementation of [SyncAdapter] to sync logs from storage with cloud using [AndroidAlarmManager]
 class AlarmManagerSyncAdapter extends SyncAdapter {
@@ -19,23 +20,28 @@ class AlarmManagerSyncAdapter extends SyncAdapter {
   }
 
   @override
-  Future<void> sync(CloudAdapter cloudAdapter) async {
+  Future<void> cloudSync(CloudAdapter cloudAdapter) async {
     try {
-      await cloudAdapter
-        .sync(await Logify.getOutOfSyncLogs())
-        .then((value) async {
-      if (value) {
-        await clear();
-      }
-    });
+      List<Log> logList = await Logify.getOutOfSyncLogs();
+
+      if (logList.isEmpty) return;
+
+      await cloudAdapter.sync(logList).then((value) async {
+        if (value) {
+          await cleanJob(logList);
+        }
+      });
     } catch (e) {
       throw ('AlarmManagerSyncAdapter sync error: $e');
     }
   }
 
   @override
-  Future<void> clear() async {
+  Future<void> cleanJob(List<Log>? logList) async {
     try {
+      if (logList == null) return;
+
+      await Logify.updateAsSynced(logList);
       await Logify.clearSynced();
     } catch (e) {
       rethrow;

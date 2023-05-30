@@ -46,14 +46,24 @@ class Logify {
     }
   }
 
-  static void syncLogs(StorageAdapter storageAdapter, SyncAdapter syncAdapter, CloudAdapter cloudAdapter) {
+  static void initSync(StorageAdapter storageAdapter, SyncAdapter syncAdapter) {
     try {
       if (_instance == null) {
         _instance = Logify._internal(storageAdapter, syncAdapter);
         _instance!._storageAdapter.init();
       }
+    } catch (e) {
+      throw('Logify error: $e');
+    }
+  }
+
+  static void syncLogs(CloudAdapter cloudAdapter) {
+    try {
+      if (_instance == null) {
+        throw('Logify is not initialized');
+      }
       
-      _instance!._syncAdapter.sync(cloudAdapter);
+      _instance!._syncAdapter.cloudSync(cloudAdapter);
     } catch (e) {
       throw('Logify error: $e');
     }
@@ -71,13 +81,25 @@ class Logify {
     }
   }
 
+  static Future<void> updateAsSynced(List<Log>? logList) async {
+    try {
+      if (_instance == null) {
+        throw('Logify is not initialized');
+      }
+      
+      await _instance!._storageAdapter.updateAsSynced(logList);
+    } catch (e) {
+      throw('Logify error: $e');
+    }
+  }
+
   static Future<void> clearSynced() async {
     try {
       if (_instance == null) {
         throw ('Logify is not initialized');
       }
 
-      return await _instance!._storageAdapter.clearSynced();
+      await _instance!._storageAdapter.clearSynced();
     } catch (e) {
       throw ('Logify error: $e');
     }

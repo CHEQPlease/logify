@@ -5,9 +5,8 @@ import 'package:logify/networking/api_helper.dart';
 class ApiAdapter implements CloudAdapter {
   final String url;
   final dynamic reqHeader;
-  final dynamic reqBody;
 
-  ApiAdapter(this.url, this.reqHeader, this.reqBody);
+  ApiAdapter(this.url, this.reqHeader);
 
   @override
   Future<bool> sync(List<Log> logList) async {
@@ -22,9 +21,33 @@ class ApiAdapter implements CloudAdapter {
 
   Future<void> upload(List<Log> logList) async {
     try {
-      await ApiHelper().post(url, reqHeader, reqBody);
+      await ApiHelper().post(url, reqHeader, getReqBody(logList));
     } catch (e) {
       rethrow;
     }
+  }
+
+  dynamic getReqBody(List<Log> logList) {
+    return {
+      "streams": logList.map((log) {
+        return {
+          "stream": {"app": "prod-cheq-pos", "level": log.logLevel},
+          "values": [
+            [
+              '${DateTime.now().millisecondsSinceEpoch.toString().replaceRange(10, 13, '')}000000000',
+              {
+                "log": {
+                  "message": log.message,
+                  "device_id": '', // todo: get device id
+                  "os_name": '', // todo: get os name
+                  "os_version": '', // todo: get os version
+                  "api_level": '' // todo: get api level
+                }
+              }
+            ]
+          ]
+        };
+      }).toList(),
+    };
   }
 }

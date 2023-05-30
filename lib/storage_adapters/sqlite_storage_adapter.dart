@@ -105,11 +105,11 @@ class SQLiteStorageAdapter implements StorageAdapter {
   }
 
   @override
-  Future<void> updateAsSynced(RangeIndex? range) async {
+  Future<void> updateAsSynced(List<Log>? logList) async {
     try {
-      if (range == null) {
-        throw Exception('Range cannot be null while updating as synced');
-      }
+      if (logList == null || logList.isEmpty) return;
+      
+      RangeIndex range = RangeIndex(logList.first.id.toString(), logList.last.id.toString());
       await open();
 
       final String query =
