@@ -26,7 +26,7 @@ class AlarmManagerSyncAdapter extends SyncAdapter {
 
       if (logList.isEmpty) return;
 
-      await cloudAdapter.sync(logList).then((value) async {
+      await cloudAdapter.syncJob(logList).then((value) async {
         if (value) {
           await cleanJob(logList);
         }

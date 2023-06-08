@@ -9,7 +9,7 @@ class ApiAdapter implements CloudAdapter {
   ApiAdapter(this.url, this.reqHeader);
 
   @override
-  Future<bool> sync(List<Log> logList) async {
+  Future<bool> syncJob(List<Log> logList) async {
     try {
       await upload(logList);
 

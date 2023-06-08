@@ -17,7 +17,7 @@ class FirebaseAdapter implements CloudAdapter {
   }
 
   @override
-  Future<bool> sync(List<Log> logList) async {
+  Future<bool> syncJob(List<Log> logList) async {
     try {
       await init();
 
