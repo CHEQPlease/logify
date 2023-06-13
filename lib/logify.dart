@@ -15,6 +15,10 @@ class Logify {
   static Logify? _instance;
 
   static Future<void> init(StorageAdapter storageAdapter, SyncAdapter syncAdapter, Duration syncInterval, Function syncCallback) async {
+    if (_instance != null) {
+      throw('Logify is already initialized');
+    }
+    
     _instance ??= Logify._internal(storageAdapter, syncAdapter);
     await _instance!._storageAdapter.init();
     await _instance!._syncAdapter.init(syncInterval, syncCallback);
