@@ -21,6 +21,8 @@ class SQLiteStorageAdapter implements StorageAdapter {
   Future<void> init() async {
     _dbName = SQLiteConfig.dbName;
     _logTableName = SQLiteConfig.logTableName;
+
+    await open();
   }
 
   @override
@@ -68,7 +70,6 @@ class SQLiteStorageAdapter implements StorageAdapter {
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
 
-      await close();
     } catch (e) {
       throw ('Logify, SQLite - $e');
     }
@@ -77,15 +78,12 @@ class SQLiteStorageAdapter implements StorageAdapter {
   @override
   Future<List<Log>> getOutOfSync() async {
     try {
-      await open();
 
       final List<Map<String, dynamic>> maps = await _db.query(
         _logTableName,
         where: 'is_synced = ?',
         whereArgs: [0],
       );
-
-      await close();
 
       return List.generate(maps.length, (i) {
         return Log(
@@ -110,14 +108,11 @@ class SQLiteStorageAdapter implements StorageAdapter {
       if (logList == null || logList.isEmpty) return;
       
       RangeIndex range = RangeIndex(logList.first.id.toString(), logList.last.id.toString());
-      await open();
 
       final String query =
           'UPDATE $_logTableName SET is_synced = 1 WHERE id BETWEEN ${range.start} AND ${range.end}';
 
       await _db.execute(query);
-
-      await close();
     } catch (e) {
       throw ('Logify, SQLite - $e');
     }
@@ -126,11 +121,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
   @override
   Future<void> clear() async {
     try {
-      await open();
-
       await _db.delete(_logTableName);
-
-      await close();
     } catch (e) {
       throw ('Logify, SQLite - $e');
     }
@@ -139,11 +130,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
   @override
   Future<void> clearSynced() async {
     try {
-      await open();
-
       await _db.delete(_logTableName, where: 'is_synced = ?', whereArgs: [1]);
-
-      await close();
     } catch (e) {
       throw ('Logify, SQLite - $e');
     }

@@ -46,11 +46,11 @@ class Logify {
     }
   }
 
-  static void initSync(StorageAdapter storageAdapter, SyncAdapter syncAdapter) {
+  static Future<void> initSync(StorageAdapter storageAdapter, SyncAdapter syncAdapter) async {
     try {
       if (_instance == null) {
         _instance = Logify._internal(storageAdapter, syncAdapter);
-        _instance!._storageAdapter.init();
+        await _instance!._storageAdapter.init();
       }
     } catch (e) {
       throw('Logify error: $e');
@@ -100,6 +100,18 @@ class Logify {
       }
 
       await _instance!._storageAdapter.clearSynced();
+    } catch (e) {
+      throw ('Logify error: $e');
+    }
+  }
+
+    static Future<void> closeDatabaseConnection() async {
+    try {
+      if (_instance == null) {
+        throw ('Logify is not initialized');
+      }
+
+      await _instance!._storageAdapter.close();
     } catch (e) {
       throw ('Logify error: $e');
     }
