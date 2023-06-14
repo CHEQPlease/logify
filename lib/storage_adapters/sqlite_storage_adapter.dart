@@ -90,12 +90,12 @@ class SQLiteStorageAdapter implements StorageAdapter {
             id: maps[i]['id'],
             tag: maps[i]['tag'],
             message: maps[i]['message'],
-            logLevel: maps[i]['logLevel'],
-            logTime: maps[i]['logTime'],
-            fileName: maps[i]['fileName'],
-            lineNumber: maps[i]['lineNumber'],
-            functionName: maps[i]['functionName'],
-            isSynced: maps[i]['isSynced']);
+            logLevel: maps[i]['log_level'],
+            logTime: maps[i]['log_time'],
+            fileName: maps[i]['file_name'],
+            lineNumber: maps[i]['line_number'],
+            functionName: maps[i]['function_name'],
+            isSynced: maps[i]['is_synced']);
       });
     } catch (e) {
       throw ('Logify, SQLite - $e');
