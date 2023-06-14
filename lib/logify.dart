@@ -1,5 +1,6 @@
 library logify;
 
+import 'package:logify/enums/log_level_enum.dart';
 import 'package:logify/interfaces/cloud_adapter.dart';
 import 'package:logify/interfaces/storage_adapter.dart';
 import 'package:logify/interfaces/sync_adapter.dart';

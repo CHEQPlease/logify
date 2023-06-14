@@ -1,3 +1,4 @@
+import 'package:logify/enums/log_level_enum.dart';
 import 'package:logify/interfaces/storage_adapter.dart';
 import 'package:logify/models/log_list.dart';
 import 'package:path/path.dart';

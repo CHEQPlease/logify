@@ -1,3 +1,4 @@
+import 'package:logify/enums/log_level_enum.dart';
 import 'package:logify/models/log_list.dart';
 
 /// An abstract interface for save logs to storage
@@ -27,6 +28,3 @@ abstract class StorageAdapter {
   /// Close connection to the storage
   Future<void> close();
 }
-
-/// Enums for log levels
-enum LogLevel { debug, info, warning, error, fatal }
