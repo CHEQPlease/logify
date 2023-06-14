@@ -37,11 +37,12 @@ class ApiAdapter implements CloudAdapter {
               '${DateTime.now().millisecondsSinceEpoch.toString().replaceRange(10, 13, '')}000000000',
               {
                 "log": {
-                  "message": log.message,
-                  "device_id": '', // todo: get device id
-                  "os_name": '', // todo: get os name
-                  "os_version": '', // todo: get os version
-                  "api_level": '' // todo: get api level
+                  'tag': log.tag,
+                  'message': log.message,
+                  'log_time': log.logTime,
+                  'file_name': log.fileName,
+                  'line_number': log.lineNumber,
+                  'function_name': log.functionName,
                 }
               }
             ]
