@@ -13,7 +13,7 @@ abstract class StorageAdapter {
     required LogLevel logLevel,
     required String logTime,
     required String fileName,
-    required int lineNumber,
+    required String lineNumber,
     required String functionName,
   });
   /// Get out of sync logs from the storage

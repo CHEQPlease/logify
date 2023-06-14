@@ -32,7 +32,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
         join(await sql.getDatabasesPath(), SQLiteConfig.dbName),
         onCreate: (db, version) {
           return db.execute(
-            'CREATE TABLE IF NOT EXISTS ${SQLiteConfig.logTableName} (id INTEGER PRIMARY KEY, tag TEXT, message TEXT, log_level TEXT, log_time TEXT, file_name TEXT, line_number INTEGER, function_name TEXT, is_synced INTEGER)',
+            'CREATE TABLE IF NOT EXISTS ${SQLiteConfig.logTableName} (id INTEGER PRIMARY KEY, tag TEXT, message TEXT, log_level TEXT, log_time TEXT, file_name TEXT, line_number TEXT, function_name TEXT, is_synced INTEGER)',
           );
         },
         version: 1,
@@ -49,7 +49,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
     required LogLevel logLevel,
     required String logTime,
     required String fileName,
-    required int lineNumber,
+    required String lineNumber,
     required String functionName,
   }) async {
     try {
