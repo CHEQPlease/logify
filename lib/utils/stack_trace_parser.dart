@@ -17,14 +17,14 @@ class StackTraceParser {
       String fileInfo = traceString.substring(indexOfFileName);
       List<String> listOfInfos = fileInfo.split(":");
       fileName = listOfInfos[0];
-      lineNumber = listOfInfos[1];
+      lineNumber = listOfInfos[1].replaceAll(RegExp(r'\D'), '');
       
       functionName = traceString
           .substring(
               traceString.indexOf(RegExp(r'[A-Za-z]')), traceString.indexOf('('))
           .trim();
     } catch (e) {
-      throw('Error while parsing stack trace $e');
+      throw ('Error while parsing stack trace $e');
     }
   }
 }
