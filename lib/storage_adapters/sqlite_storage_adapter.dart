@@ -53,8 +53,6 @@ class SQLiteStorageAdapter implements StorageAdapter {
     required String functionName,
   }) async {
     try {
-      await open();
-
       await _db.insert(
         _logTableName,
         {
