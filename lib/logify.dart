@@ -51,6 +51,131 @@ class Logify {
     }
   }
 
+  static void debug(
+      dynamic message, {
+        String tag = '',
+      }) {
+    try {
+      if (_instance == null) {
+        throw('Logify is not initialized');
+      }
+
+      StackTraceParser stackTraceParser = StackTraceParser(StackTrace.current);
+
+      _instance!._storageAdapter.insert(
+        tag,
+        message,
+        logLevel: LogLevel.debug,
+        logTime: DateTime.now().toIso8601String(),
+        fileName: stackTraceParser.fileName,
+        lineNumber: stackTraceParser.lineNumber,
+        functionName: stackTraceParser.functionName,
+      );
+    } catch (e) {
+      throw('Logify error: $e');
+    }
+  }
+
+  static void info(
+      dynamic message, {
+        String tag = '',
+      }) {
+    try {
+      if (_instance == null) {
+        throw('Logify is not initialized');
+      }
+
+      StackTraceParser stackTraceParser = StackTraceParser(StackTrace.current);
+
+      _instance!._storageAdapter.insert(
+        tag,
+        message,
+        logLevel: LogLevel.info,
+        logTime: DateTime.now().toIso8601String(),
+        fileName: stackTraceParser.fileName,
+        lineNumber: stackTraceParser.lineNumber,
+        functionName: stackTraceParser.functionName,
+      );
+    } catch (e) {
+      throw('Logify error: $e');
+    }
+  }
+
+  static void warning(
+      dynamic message, {
+        String tag = '',
+      }) {
+    try {
+      if (_instance == null) {
+        throw('Logify is not initialized');
+      }
+
+      StackTraceParser stackTraceParser = StackTraceParser(StackTrace.current);
+
+      _instance!._storageAdapter.insert(
+        tag,
+        message,
+        logLevel: LogLevel.warning,
+        logTime: DateTime.now().toIso8601String(),
+        fileName: stackTraceParser.fileName,
+        lineNumber: stackTraceParser.lineNumber,
+        functionName: stackTraceParser.functionName,
+      );
+    } catch (e) {
+      throw('Logify error: $e');
+    }
+  }
+
+  static void error(
+      dynamic message, {
+        String tag = '',
+      }) {
+    try {
+      if (_instance == null) {
+        throw('Logify is not initialized');
+      }
+
+      StackTraceParser stackTraceParser = StackTraceParser(StackTrace.current);
+
+      _instance!._storageAdapter.insert(
+        tag,
+        message,
+        logLevel: LogLevel.error,
+        logTime: DateTime.now().toIso8601String(),
+        fileName: stackTraceParser.fileName,
+        lineNumber: stackTraceParser.lineNumber,
+        functionName: stackTraceParser.functionName,
+      );
+    } catch (e) {
+      throw('Logify error: $e');
+    }
+  }
+
+  static void fatal(
+      dynamic message, {
+        String tag = '',
+      }) {
+    try {
+      if (_instance == null) {
+        throw('Logify is not initialized');
+      }
+
+      StackTraceParser stackTraceParser = StackTraceParser(StackTrace.current);
+
+      _instance!._storageAdapter.insert(
+        tag,
+        message,
+        logLevel: LogLevel.fatal,
+        logTime: DateTime.now().toIso8601String(),
+        fileName: stackTraceParser.fileName,
+        lineNumber: stackTraceParser.lineNumber,
+        functionName: stackTraceParser.functionName,
+      );
+    } catch (e) {
+      throw('Logify error: $e');
+    }
+  }
+
   static Future<void> initSync(StorageAdapter storageAdapter, SyncAdapter syncAdapter) async {
     try {
       if (_instance == null) {
