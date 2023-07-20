@@ -5,8 +5,9 @@ import 'package:logify/networking/api_helper.dart';
 class ApiAdapter implements CloudAdapter {
   final String url;
   final dynamic reqHeader;
+  final String env;
 
-  ApiAdapter(this.url, this.reqHeader);
+  ApiAdapter(this.url, this.reqHeader, this.env);
 
   @override
   Future<bool> syncJob(List<Log> logList) async {
@@ -31,7 +32,7 @@ class ApiAdapter implements CloudAdapter {
     return {
       "streams": logList.map((log) {
         return {
-          "stream": {"app": "prod-cheq-pos", "level": log.logLevel},
+          "stream": {"app": env, "level": log.logLevel},
           "values": [
             [
               '${DateTime.now().millisecondsSinceEpoch.toString().replaceRange(10, 13, '')}000000000',
