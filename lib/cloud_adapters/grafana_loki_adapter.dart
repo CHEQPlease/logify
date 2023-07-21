@@ -2,12 +2,12 @@ import 'package:logify/interfaces/cloud_adapter.dart';
 import 'package:logify/models/log_list.dart';
 import 'package:logify/networking/api_helper.dart';
 
-class ApiAdapter implements CloudAdapter {
+class GrafanaLokiAdapter implements CloudAdapter {
   final String url;
   final dynamic reqHeader;
   final String env;
 
-  ApiAdapter(this.url, this.reqHeader, this.env);
+  GrafanaLokiAdapter(this.url, this.reqHeader, this.env);
 
   @override
   Future<bool> syncJob(List<Log> logList) async {
