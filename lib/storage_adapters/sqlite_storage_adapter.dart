@@ -30,7 +30,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
   Future<void> open() async {
     try {
       _db = await sql.openDatabase(
-        join(await sql.getDatabasesPath(), SQLiteConfig.dbName),
+        join(await sql.getDatabasesPath(), _dbName),
         onCreate: (db, version) {
           return db.execute(
             'CREATE TABLE IF NOT EXISTS ${SQLiteConfig.logTableName} (id INTEGER PRIMARY KEY, tag TEXT, message TEXT, log_level TEXT, log_time TEXT, file_name TEXT, line_number TEXT, function_name TEXT, is_synced INTEGER)',
