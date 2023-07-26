@@ -13,7 +13,7 @@ class AlarmManagerSyncAdapter extends SyncAdapter {
     try {
       await AndroidAlarmManager.initialize();
 
-      await AndroidAlarmManager.periodic(syncInterval, 0, syncCallback, rescheduleOnReboot: true);
+      await AndroidAlarmManager.periodic(syncInterval, 0, syncCallback, rescheduleOnReboot: true, allowWhileIdle: true);
     } catch (e) {
       throw ('AlarmManagerSyncAdapter error: $e');
     }
