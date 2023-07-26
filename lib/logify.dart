@@ -1,5 +1,6 @@
 library logify;
 
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:logify/enums/log_level_enum.dart';
 import 'package:logify/interfaces/cloud_adapter.dart';
 import 'package:logify/interfaces/storage_adapter.dart';
@@ -187,13 +188,15 @@ class Logify {
     }
   }
 
-  static void syncLogs(CloudAdapter cloudAdapter) {
+  static void syncLogs(CloudAdapter cloudAdapter) async {
     try {
       if (_instance == null) {
         throw('Logify is not initialized');
       }
-      
-      _instance!._syncAdapter.cloudSync(cloudAdapter);
+
+      if (await InternetConnectionChecker().hasConnection) {
+        _instance!._syncAdapter.cloudSync(cloudAdapter);
+      }
     } catch (e) {
       throw('Logify error: $e');
     }
