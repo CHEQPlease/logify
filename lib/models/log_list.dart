@@ -7,7 +7,11 @@ class LogList {
 class Log {
   int? id;
   String? tag;
-  dynamic message;
+  String? message;
+  Map<String, dynamic>? req;
+  Map<String, dynamic>? res;
+  Map<String, dynamic>? err;
+  Map<String, dynamic>? props;
   String? logLevel;
   String? logTime;
   String? fileName;
@@ -19,6 +23,10 @@ class Log {
     this.id,
     this.tag,
     this.message,
+    this.req,
+    this.res,
+    this.err,
+    this.props,
     this.logLevel,
     this.logTime,
     this.fileName,
@@ -31,6 +39,10 @@ class Log {
     return {
       'tag': tag,
       'message': message,
+      'req': req,
+      'res': res,
+      'err': err,
+      'props': props,
       'logLevel': logLevel,
       'logTime': logTime,
       'fileName': fileName,

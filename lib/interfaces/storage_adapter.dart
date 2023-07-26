@@ -10,13 +10,17 @@ abstract class StorageAdapter {
   /// Insert a new log into the storage
   Future<void> insert(
     String tag,
-    dynamic message, {
-    required LogLevel logLevel,
-    required String logTime,
-    required String fileName,
-    required String lineNumber,
-    required String functionName,
-  });
+    String message,
+    Map<String, dynamic>? req,
+    Map<String, dynamic>? res,
+    Map<String, dynamic>? err,
+    Map<String, dynamic>? props,
+    LogLevel logLevel,
+    String logTime,
+    String fileName,
+    String lineNumber,
+    String functionName,
+  );
   /// Get out of sync logs from the storage
   Future<List<Log>> getOutOfSync();
   /// Update logs as synced in the storage

@@ -1,9 +1,11 @@
 import 'package:logify/enums/log_level_enum.dart';
 import 'package:logify/interfaces/storage_adapter.dart';
 import 'package:logify/models/log_list.dart';
+import 'package:logify/utils/json_helper.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:sqflite/sqlite_api.dart';
+import 'dart:convert';
 
 class SQLiteStorageAdapter implements StorageAdapter {
   static final SQLiteStorageAdapter _instance = SQLiteStorageAdapter._internal();
@@ -33,7 +35,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
         join(await sql.getDatabasesPath(), _dbName),
         onCreate: (db, version) {
           return db.execute(
-            'CREATE TABLE IF NOT EXISTS ${SQLiteConfig.logTableName} (id INTEGER PRIMARY KEY, tag TEXT, message TEXT, log_level TEXT, log_time TEXT, file_name TEXT, line_number TEXT, function_name TEXT, is_synced INTEGER)',
+            'CREATE TABLE IF NOT EXISTS ${SQLiteConfig.logTableName} (id INTEGER PRIMARY KEY, tag TEXT, message TEXT, req TEXT, res TEXT, err TEXT, props TEXT, log_level TEXT, log_time TEXT, file_name TEXT, line_number TEXT, function_name TEXT, is_synced INTEGER)',
           );
         },
         version: 1,
@@ -46,19 +48,27 @@ class SQLiteStorageAdapter implements StorageAdapter {
   @override
   Future<void> insert(
     String tag,
-    dynamic message, {
-    required LogLevel logLevel,
-    required String logTime,
-    required String fileName,
-    required String lineNumber,
-    required String functionName,
-  }) async {
+    String message,
+    Map<String, dynamic>? req,
+    Map<String, dynamic>? res,
+    Map<String, dynamic>? err,
+    Map<String, dynamic>? props,
+    LogLevel logLevel,
+    String logTime,
+    String fileName,
+    String lineNumber,
+    String functionName,
+  ) async {
     try {
       await _db.insert(
         _logTableName,
         {
           'tag': tag,
           'message': message.toString(),
+          'req': JSON.safeEncode(req),
+          'res': JSON.safeEncode(res),
+          'err': JSON.safeEncode(err),
+          'props': JSON.safeEncode(props),
           'log_level': logLevel.name,
           'log_time': logTime,
           'file_name': fileName,
@@ -89,6 +99,10 @@ class SQLiteStorageAdapter implements StorageAdapter {
             id: maps[i]['id'],
             tag: maps[i]['tag'],
             message: maps[i]['message'],
+            req: json.decode(maps[i]['req']),
+            res: json.decode(maps[i]['res']),
+            err: json.decode(maps[i]['err']),
+            props: json.decode(maps[i]['props']),
             logLevel: maps[i]['log_level'],
             logTime: maps[i]['log_time'],
             fileName: maps[i]['file_name'],

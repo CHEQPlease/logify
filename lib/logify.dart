@@ -27,8 +27,12 @@ class Logify {
   }
 
   static void log(
-    dynamic message, {
-    String tag = '',
+    String message, {
+    String? tag,
+    Map<String, dynamic>? req,
+    Map<String, dynamic>? res,
+    Map<String, dynamic>? err,
+    Map<String, dynamic>? props,
     LogLevel logLevel = LogLevel.info,
   }) {
     try {
@@ -39,38 +43,40 @@ class Logify {
       StackTraceParser stackTraceParser = StackTraceParser(StackTrace.current);
 
       _instance!._storageAdapter.insert(
-        tag,
+        tag ?? '',
         message,
-        logLevel: logLevel,
-        logTime: DateTime.now().toIso8601String(),
-        fileName: stackTraceParser.fileName,
-        lineNumber: stackTraceParser.lineNumber,
-        functionName: stackTraceParser.functionName,
+        req,
+        res,
+        err,
+        props,
+        logLevel,
+        DateTime.now().toIso8601String(),
+        stackTraceParser.fileName,
+        stackTraceParser.lineNumber,
+        stackTraceParser.functionName,
       );
     } catch (e) {
-      throw('Logify error: $e');
+      rethrow;
     }
   }
 
   static void debug(
-      dynamic message, {
-        String tag = '',
-      }) {
+    String message, {
+    String? tag,
+    Map<String, dynamic>? req,
+    Map<String, dynamic>? res,
+    Map<String, dynamic>? err,
+    Map<String, dynamic>? props,
+  }) {
     try {
-      if (_instance == null) {
-        throw('Logify is not initialized');
-      }
-
-      StackTraceParser stackTraceParser = StackTraceParser(StackTrace.current);
-
-      _instance!._storageAdapter.insert(
-        tag,
+      log(
         message,
+        tag: tag,
+        req: req,
+        res: res,
+        err: err,
+        props: props,
         logLevel: LogLevel.debug,
-        logTime: DateTime.now().toIso8601String(),
-        fileName: stackTraceParser.fileName,
-        lineNumber: stackTraceParser.lineNumber,
-        functionName: stackTraceParser.functionName,
       );
     } catch (e) {
       throw('Logify error: $e');
@@ -78,24 +84,22 @@ class Logify {
   }
 
   static void info(
-      dynamic message, {
-        String tag = '',
-      }) {
+    String message, {
+    String? tag,
+    Map<String, dynamic>? req,
+    Map<String, dynamic>? res,
+    Map<String, dynamic>? err,
+    Map<String, dynamic>? props,
+  }) {
     try {
-      if (_instance == null) {
-        throw('Logify is not initialized');
-      }
-
-      StackTraceParser stackTraceParser = StackTraceParser(StackTrace.current);
-
-      _instance!._storageAdapter.insert(
-        tag,
+      log(
         message,
-        logLevel: LogLevel.info,
-        logTime: DateTime.now().toIso8601String(),
-        fileName: stackTraceParser.fileName,
-        lineNumber: stackTraceParser.lineNumber,
-        functionName: stackTraceParser.functionName,
+        tag: tag,
+        req: req,
+        res: res,
+        err: err,
+        props: props,
+        logLevel: LogLevel.debug,
       );
     } catch (e) {
       throw('Logify error: $e');
@@ -103,24 +107,22 @@ class Logify {
   }
 
   static void warning(
-      dynamic message, {
-        String tag = '',
-      }) {
+    String message, {
+    String? tag,
+    Map<String, dynamic>? req,
+    Map<String, dynamic>? res,
+    Map<String, dynamic>? err,
+    Map<String, dynamic>? props,
+  }) {
     try {
-      if (_instance == null) {
-        throw('Logify is not initialized');
-      }
-
-      StackTraceParser stackTraceParser = StackTraceParser(StackTrace.current);
-
-      _instance!._storageAdapter.insert(
-        tag,
+      log(
         message,
-        logLevel: LogLevel.warning,
-        logTime: DateTime.now().toIso8601String(),
-        fileName: stackTraceParser.fileName,
-        lineNumber: stackTraceParser.lineNumber,
-        functionName: stackTraceParser.functionName,
+        tag: tag,
+        req: req,
+        res: res,
+        err: err,
+        props: props,
+        logLevel: LogLevel.debug,
       );
     } catch (e) {
       throw('Logify error: $e');
@@ -128,24 +130,22 @@ class Logify {
   }
 
   static void error(
-      dynamic message, {
-        String tag = '',
-      }) {
+      String message, {
+        String? tag,
+        Map<String, dynamic>? req,
+        Map<String, dynamic>? res,
+        Map<String, dynamic>? err,
+        Map<String, dynamic>? props,
+  }) {
     try {
-      if (_instance == null) {
-        throw('Logify is not initialized');
-      }
-
-      StackTraceParser stackTraceParser = StackTraceParser(StackTrace.current);
-
-      _instance!._storageAdapter.insert(
-        tag,
+      log(
         message,
-        logLevel: LogLevel.error,
-        logTime: DateTime.now().toIso8601String(),
-        fileName: stackTraceParser.fileName,
-        lineNumber: stackTraceParser.lineNumber,
-        functionName: stackTraceParser.functionName,
+        tag: tag,
+        req: req,
+        res: res,
+        err: err,
+        props: props,
+        logLevel: LogLevel.debug,
       );
     } catch (e) {
       throw('Logify error: $e');
@@ -153,24 +153,22 @@ class Logify {
   }
 
   static void fatal(
-      dynamic message, {
-        String tag = '',
-      }) {
+    String message, {
+    String? tag,
+    Map<String, dynamic>? req,
+    Map<String, dynamic>? res,
+    Map<String, dynamic>? err,
+    Map<String, dynamic>? props,
+  }) {
     try {
-      if (_instance == null) {
-        throw('Logify is not initialized');
-      }
-
-      StackTraceParser stackTraceParser = StackTraceParser(StackTrace.current);
-
-      _instance!._storageAdapter.insert(
-        tag,
+      log(
         message,
-        logLevel: LogLevel.fatal,
-        logTime: DateTime.now().toIso8601String(),
-        fileName: stackTraceParser.fileName,
-        lineNumber: stackTraceParser.lineNumber,
-        functionName: stackTraceParser.functionName,
+        tag: tag,
+        req: req,
+        res: res,
+        err: err,
+        props: props,
+        logLevel: LogLevel.debug,
       );
     } catch (e) {
       throw('Logify error: $e');
