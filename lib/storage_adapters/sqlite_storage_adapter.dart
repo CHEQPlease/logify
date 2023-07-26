@@ -59,7 +59,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
         {
           'tag': tag,
           'message': message.toString(),
-          'log_level': logLevel.toString(),
+          'log_level': logLevel.name,
           'log_time': logTime,
           'file_name': fileName,
           'line_number': lineNumber,
