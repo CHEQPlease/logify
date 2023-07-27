@@ -9,8 +9,9 @@ abstract class StorageAdapter {
   Future<void> open();
   /// Insert a new log into the storage
   Future<void> insert(
-    String tag,
-    String message,
+    String? tag,
+    String? message,
+    String? exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
     Map<String, dynamic>? err,

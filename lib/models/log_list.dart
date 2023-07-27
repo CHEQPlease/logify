@@ -8,6 +8,7 @@ class Log {
   int? id;
   String? tag;
   String? message;
+  String? exc;
   Map<String, dynamic>? req;
   Map<String, dynamic>? res;
   Map<String, dynamic>? err;
@@ -23,6 +24,7 @@ class Log {
     this.id,
     this.tag,
     this.message,
+    this.exc,
     this.req,
     this.res,
     this.err,
@@ -39,6 +41,7 @@ class Log {
     return {
       'tag': tag,
       'message': message,
+      'exc': exc,
       'req': req,
       'res': res,
       'err': err,

@@ -40,6 +40,7 @@ class GrafanaLokiAdapter implements CloudAdapter {
                 "log": {
                   'tag': log.tag,
                   'msg': log.message,
+                  'exc': log.exc,
                   'req': log.req,
                   'res': log.res,
                   'err': log.err,

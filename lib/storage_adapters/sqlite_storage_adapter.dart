@@ -47,8 +47,9 @@ class SQLiteStorageAdapter implements StorageAdapter {
 
   @override
   Future<void> insert(
-    String tag,
-    String message,
+    String? tag,
+    String? message,
+    String? exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
     Map<String, dynamic>? err,
@@ -64,7 +65,8 @@ class SQLiteStorageAdapter implements StorageAdapter {
         _logTableName,
         {
           'tag': tag,
-          'message': message.toString(),
+          'message': message,
+          'exc': exc,
           'req': JSON.safeEncode(req),
           'res': JSON.safeEncode(res),
           'err': JSON.safeEncode(err),
@@ -98,6 +100,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
         return Log(
             id: maps[i]['id'],
             tag: maps[i]['tag'],
+            exc: maps[i]['exc'],
             message: maps[i]['message'],
             req: json.decode(maps[i]['req']),
             res: json.decode(maps[i]['res']),

@@ -29,6 +29,7 @@ class Logify {
   static void log({
     String? message,
     String? tag,
+    String? exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
     Map<String, dynamic>? err,
@@ -43,8 +44,9 @@ class Logify {
       StackTraceParser stackTraceParser = StackTraceParser(StackTrace.current);
 
       _instance!._storageAdapter.insert(
-        tag ?? '',
-        message ?? '',
+        tag,
+        message,
+        exc,
         req,
         res,
         err,
@@ -63,6 +65,7 @@ class Logify {
   static void debug({
     String? message,
     String? tag,
+    String? exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
     Map<String, dynamic>? err,
@@ -86,6 +89,7 @@ class Logify {
   static void info({
     String? message,
     String? tag,
+    String? exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
     Map<String, dynamic>? err,
@@ -109,6 +113,7 @@ class Logify {
   static void warning({
     String? message,
     String? tag,
+    String? exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
     Map<String, dynamic>? err,
@@ -132,6 +137,7 @@ class Logify {
   static void error({
     String? message,
     String? tag,
+    String? exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
     Map<String, dynamic>? err,
@@ -155,6 +161,7 @@ class Logify {
   static void fatal({
     String? message,
     String? tag,
+    String? exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
     Map<String, dynamic>? err,
