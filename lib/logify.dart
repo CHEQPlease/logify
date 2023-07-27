@@ -27,9 +27,9 @@ class Logify {
   }
 
   static void log({
-    String? message,
+    dynamic message,
     String? tag,
-    String? exc,
+    dynamic exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
     Map<String, dynamic>? err,
@@ -63,9 +63,9 @@ class Logify {
   }
 
   static void debug({
-    String? message,
+    dynamic message,
     String? tag,
-    String? exc,
+    dynamic exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
     Map<String, dynamic>? err,
@@ -87,9 +87,9 @@ class Logify {
   }
 
   static void info({
-    String? message,
+    dynamic message,
     String? tag,
-    String? exc,
+    dynamic exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
     Map<String, dynamic>? err,
@@ -111,9 +111,9 @@ class Logify {
   }
 
   static void warning({
-    String? message,
+    dynamic message,
     String? tag,
-    String? exc,
+    dynamic exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
     Map<String, dynamic>? err,
@@ -135,9 +135,9 @@ class Logify {
   }
 
   static void error({
-    String? message,
+    dynamic message,
     String? tag,
-    String? exc,
+    dynamic exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
     Map<String, dynamic>? err,
@@ -159,9 +159,9 @@ class Logify {
   }
 
   static void fatal({
-    String? message,
+    dynamic message,
     String? tag,
-    String? exc,
+    dynamic exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
     Map<String, dynamic>? err,
