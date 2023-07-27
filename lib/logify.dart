@@ -26,8 +26,8 @@ class Logify {
     await _instance!._syncAdapter.init(syncInterval, syncCallback);
   }
 
-  static void log(
-    String message, {
+  static void log({
+    String? message,
     String? tag,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
@@ -44,7 +44,7 @@ class Logify {
 
       _instance!._storageAdapter.insert(
         tag ?? '',
-        message,
+        message ?? '',
         req,
         res,
         err,
@@ -60,8 +60,8 @@ class Logify {
     }
   }
 
-  static void debug(
-    String message, {
+  static void debug({
+    String? message,
     String? tag,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
@@ -70,7 +70,7 @@ class Logify {
   }) {
     try {
       log(
-        message,
+        message: message,
         tag: tag,
         req: req,
         res: res,
@@ -83,8 +83,8 @@ class Logify {
     }
   }
 
-  static void info(
-    String message, {
+  static void info({
+    String? message,
     String? tag,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
@@ -93,7 +93,7 @@ class Logify {
   }) {
     try {
       log(
-        message,
+        message: message,
         tag: tag,
         req: req,
         res: res,
@@ -106,8 +106,8 @@ class Logify {
     }
   }
 
-  static void warning(
-    String message, {
+  static void warning({
+    String? message,
     String? tag,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
@@ -116,7 +116,7 @@ class Logify {
   }) {
     try {
       log(
-        message,
+        message: message,
         tag: tag,
         req: req,
         res: res,
@@ -129,17 +129,17 @@ class Logify {
     }
   }
 
-  static void error(
-      String message, {
-        String? tag,
-        Map<String, dynamic>? req,
-        Map<String, dynamic>? res,
-        Map<String, dynamic>? err,
-        Map<String, dynamic>? props,
+  static void error({
+    String? message,
+    String? tag,
+    Map<String, dynamic>? req,
+    Map<String, dynamic>? res,
+    Map<String, dynamic>? err,
+    Map<String, dynamic>? props,
   }) {
     try {
       log(
-        message,
+        message: message,
         tag: tag,
         req: req,
         res: res,
@@ -152,8 +152,8 @@ class Logify {
     }
   }
 
-  static void fatal(
-    String message, {
+  static void fatal({
+    String? message,
     String? tag,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
@@ -162,7 +162,7 @@ class Logify {
   }) {
     try {
       log(
-        message,
+        message: message,
         tag: tag,
         req: req,
         res: res,
