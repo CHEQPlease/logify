@@ -32,7 +32,7 @@ class Logify {
     dynamic exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
-    Map<String, dynamic>? err,
+    dynamic err,
     Map<String, dynamic>? props,
     LogLevel logLevel = LogLevel.info,
   }) {
@@ -68,7 +68,7 @@ class Logify {
     dynamic exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
-    Map<String, dynamic>? err,
+    dynamic err,
     Map<String, dynamic>? props,
   }) {
     try {
@@ -92,7 +92,7 @@ class Logify {
     dynamic exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
-    Map<String, dynamic>? err,
+    dynamic err,
     Map<String, dynamic>? props,
   }) {
     try {
@@ -116,7 +116,7 @@ class Logify {
     dynamic exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
-    Map<String, dynamic>? err,
+    dynamic err,
     Map<String, dynamic>? props,
   }) {
     try {
@@ -140,7 +140,7 @@ class Logify {
     dynamic exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
-    Map<String, dynamic>? err,
+    dynamic err,
     Map<String, dynamic>? props,
   }) {
     try {
@@ -164,7 +164,7 @@ class Logify {
     dynamic exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
-    Map<String, dynamic>? err,
+    dynamic err,
     Map<String, dynamic>? props,
   }) {
     try {
