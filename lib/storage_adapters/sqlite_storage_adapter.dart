@@ -5,7 +5,6 @@ import 'package:logify/utils/json_helper.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:sqflite/sqlite_api.dart';
-import 'dart:convert';
 
 class SQLiteStorageAdapter implements StorageAdapter {
   static final SQLiteStorageAdapter _instance = SQLiteStorageAdapter._internal();
@@ -67,10 +66,10 @@ class SQLiteStorageAdapter implements StorageAdapter {
           'tag': tag,
           'message': message.toString(),
           'exc': exc.toString(),
-          'req': JSON.safeEncode(req),
-          'res': JSON.safeEncode(res),
+          'req': JSON.tryEncode(req),
+          'res': JSON.tryEncode(res),
           'err': JSON.tryEncode(err),
-          'props': JSON.safeEncode(props),
+          'props': JSON.tryEncode(props),
           'log_level': logLevel.name,
           'log_time': logTime,
           'file_name': fileName,
@@ -102,10 +101,10 @@ class SQLiteStorageAdapter implements StorageAdapter {
             tag: maps[i]['tag'],
             message: maps[i]['message'],
             exc: maps[i]['exc'],
-            req: json.decode(maps[i]['req']),
-            res: json.decode(maps[i]['res']),
+            req: JSON.tryDecode(maps[i]['req']),
+            res: JSON.tryDecode(maps[i]['res']),
             err: JSON.tryDecode(maps[i]['err']),
-            props: json.decode(maps[i]['props']),
+            props: JSON.tryDecode(maps[i]['props']),
             logLevel: maps[i]['log_level'],
             logTime: maps[i]['log_time'],
             fileName: maps[i]['file_name'],

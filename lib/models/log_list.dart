@@ -9,10 +9,10 @@ class Log {
   String? tag;
   String? message;
   String? exc;
-  Map<String, dynamic>? req;
-  Map<String, dynamic>? res;
+  dynamic req;
+  dynamic res;
   dynamic err;
-  Map<String, dynamic>? props;
+  dynamic props;
   String? logLevel;
   String? logTime;
   String? fileName;
