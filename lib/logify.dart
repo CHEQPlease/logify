@@ -35,13 +35,15 @@ class Logify {
     dynamic err,
     Map<String, dynamic>? props,
     LogLevel logLevel = LogLevel.info,
+    /// Send stackTrace to logify if you want use wrapper function to identify correct trace string
+    StackTrace? stackTrace,
   }) {
     try {
       if (_instance == null) {
         throw('Logify is not initialized');
       }
       
-      StackTraceParser stackTraceParser = StackTraceParser(StackTrace.current);
+      StackTraceParser stackTraceParser = StackTraceParser(stackTrace);
 
       _instance!._storageAdapter.insert(
         tag,
@@ -70,6 +72,8 @@ class Logify {
     Map<String, dynamic>? res,
     dynamic err,
     Map<String, dynamic>? props,
+    /// Send stackTrace to logify if you want use wrapper function to identify correct trace string
+    StackTrace? stackTrace
   }) {
     try {
       log(
@@ -81,6 +85,7 @@ class Logify {
         err: err,
         props: props,
         logLevel: LogLevel.debug,
+        stackTrace: stackTrace,
       );
     } catch (e) {
       throw('Logify error: $e');
@@ -95,6 +100,8 @@ class Logify {
     Map<String, dynamic>? res,
     dynamic err,
     Map<String, dynamic>? props,
+    /// Send stackTrace to logify if you want use wrapper function to identify correct trace string
+    StackTrace? stackTrace,
   }) {
     try {
       log(
@@ -106,6 +113,7 @@ class Logify {
         err: err,
         props: props,
         logLevel: LogLevel.debug,
+        stackTrace: stackTrace,
       );
     } catch (e) {
       throw('Logify error: $e');
@@ -120,6 +128,8 @@ class Logify {
     Map<String, dynamic>? res,
     dynamic err,
     Map<String, dynamic>? props,
+    /// Send stackTrace to logify if you want use wrapper function to identify correct trace string
+    StackTrace? stackTrace,
   }) {
     try {
       log(
@@ -131,6 +141,7 @@ class Logify {
         err: err,
         props: props,
         logLevel: LogLevel.debug,
+        stackTrace: stackTrace,
       );
     } catch (e) {
       throw('Logify error: $e');
@@ -145,6 +156,8 @@ class Logify {
     Map<String, dynamic>? res,
     dynamic err,
     Map<String, dynamic>? props,
+    /// Send stackTrace to logify if you want use wrapper function to identify correct trace string
+    StackTrace? stackTrace,
   }) {
     try {
       log(
@@ -156,6 +169,7 @@ class Logify {
         err: err,
         props: props,
         logLevel: LogLevel.debug,
+        stackTrace: stackTrace,
       );
     } catch (e) {
       throw('Logify error: $e');
@@ -170,6 +184,8 @@ class Logify {
     Map<String, dynamic>? res,
     dynamic err,
     Map<String, dynamic>? props,
+    /// Send stackTrace to logify if you want use wrapper function to identify correct trace string
+    StackTrace? stackTrace,
   }) {
     try {
       log(
@@ -181,6 +197,7 @@ class Logify {
         err: err,
         props: props,
         logLevel: LogLevel.debug,
+        stackTrace: stackTrace,
       );
     } catch (e) {
       throw('Logify error: $e');
