@@ -75,6 +75,7 @@ class Logify {
       log(
         message: message,
         tag: tag,
+        exc: exc,
         req: req,
         res: res,
         err: err,
@@ -99,6 +100,7 @@ class Logify {
       log(
         message: message,
         tag: tag,
+        exc: exc,
         req: req,
         res: res,
         err: err,
@@ -123,6 +125,7 @@ class Logify {
       log(
         message: message,
         tag: tag,
+        exc: exc,
         req: req,
         res: res,
         err: err,
@@ -147,6 +150,7 @@ class Logify {
       log(
         message: message,
         tag: tag,
+        exc: exc,
         req: req,
         res: res,
         err: err,
@@ -171,6 +175,7 @@ class Logify {
       log(
         message: message,
         tag: tag,
+        exc: exc,
         req: req,
         res: res,
         err: err,
