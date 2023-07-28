@@ -10,7 +10,7 @@ class StackTraceParser {
   void _parse(StackTrace stackTrace) {
     try {
       /* The trace comes with multiple lines of strings, we are interested in second line, which has the information we need */
-      String traceString = stackTrace.toString().split("\n")[1];
+      String traceString = stackTrace.toString().split("\n")[2];
 
       /* Search through the string and find the index of the file name by looking for the '.dart' regex */
       int indexOfFileName = traceString.indexOf(RegExp(r'[A-Za-z0-9-_]+.dart'));
