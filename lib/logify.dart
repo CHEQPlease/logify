@@ -112,7 +112,7 @@ class Logify {
         res: res,
         err: err,
         props: props,
-        logLevel: LogLevel.debug,
+        logLevel: LogLevel.info,
         stackTrace: stackTrace,
       );
     } catch (e) {
@@ -140,7 +140,7 @@ class Logify {
         res: res,
         err: err,
         props: props,
-        logLevel: LogLevel.debug,
+        logLevel: LogLevel.warning,
         stackTrace: stackTrace,
       );
     } catch (e) {
@@ -168,7 +168,7 @@ class Logify {
         res: res,
         err: err,
         props: props,
-        logLevel: LogLevel.debug,
+        logLevel: LogLevel.error,
         stackTrace: stackTrace,
       );
     } catch (e) {
@@ -196,7 +196,7 @@ class Logify {
         res: res,
         err: err,
         props: props,
-        logLevel: LogLevel.debug,
+        logLevel: LogLevel.fatal,
         stackTrace: stackTrace,
       );
     } catch (e) {
