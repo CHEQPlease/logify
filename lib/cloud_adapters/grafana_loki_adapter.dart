@@ -6,9 +6,8 @@ import 'package:logify/utils/exception_handler.dart';
 class GrafanaLokiAdapter implements CloudAdapter {
   final String url;
   final dynamic reqHeader;
-  final String env;
 
-  GrafanaLokiAdapter(this.url, this.reqHeader, this.env);
+  GrafanaLokiAdapter(this.url, this.reqHeader);
 
   @override
   Future<bool> syncJob(List<Log> logList) async {
