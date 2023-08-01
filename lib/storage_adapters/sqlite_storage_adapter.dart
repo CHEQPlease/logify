@@ -51,7 +51,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
     dynamic exc,
     Map<String, dynamic>? req,
     Map<String, dynamic>? res,
-    Map<String, dynamic>? err,
+    dynamic err,
     Map<String, dynamic>? props,
     LogLevel logLevel,
     String logTime,
