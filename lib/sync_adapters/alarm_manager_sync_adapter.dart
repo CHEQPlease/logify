@@ -3,6 +3,7 @@ import 'package:logify/interfaces/cloud_adapter.dart';
 import 'package:logify/interfaces/sync_adapter.dart';
 import 'package:logify/logify.dart';
 import 'package:logify/models/log_list.dart';
+import 'package:logify/utils/exception_handler.dart';
 
 /// An implementation of [SyncAdapter] to sync logs from storage with cloud using [AndroidAlarmManager]
 class AlarmManagerSyncAdapter extends SyncAdapter {
@@ -15,7 +16,7 @@ class AlarmManagerSyncAdapter extends SyncAdapter {
 
       await AndroidAlarmManager.periodic(syncInterval, 0, syncCallback, rescheduleOnReboot: true, allowWhileIdle: true);
     } catch (e) {
-      throw ('AlarmManagerSyncAdapter error: $e');
+      ExceptionHandler.log('AlarmManagerSyncAdapter initialization error: $e');
     }
   }
 
@@ -32,7 +33,7 @@ class AlarmManagerSyncAdapter extends SyncAdapter {
         }
       });
     } catch (e) {
-      throw ('AlarmManagerSyncAdapter sync error: $e');
+      ExceptionHandler.log('AlarmManagerSyncAdapter sync error: $e');
     }
   }
 
@@ -44,7 +45,7 @@ class AlarmManagerSyncAdapter extends SyncAdapter {
       await Logify.updateAsSynced(logList);
       await Logify.clearSynced();
     } catch (e) {
-      rethrow;
+      ExceptionHandler.log('AlarmManagerSyncAdapter clean job error: $e');
     }
   }
 }

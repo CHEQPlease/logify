@@ -6,6 +6,7 @@ import 'package:logify/interfaces/cloud_adapter.dart';
 import 'package:logify/interfaces/storage_adapter.dart';
 import 'package:logify/interfaces/sync_adapter.dart';
 import 'package:logify/models/log_list.dart';
+import 'package:logify/utils/exception_handler.dart';
 import 'package:logify/utils/stack_trace_parser.dart';
 
 class Logify {
@@ -17,13 +18,17 @@ class Logify {
   static Logify? _instance;
 
   static Future<void> init(StorageAdapter storageAdapter, SyncAdapter syncAdapter, Duration syncInterval, Function syncCallback) async {
-    if (_instance != null) {
-      throw('Logify is already initialized');
+    try {
+      if (_instance != null) {
+        throw('Logify is already initialized');
+      }
+      
+      _instance ??= Logify._internal(storageAdapter, syncAdapter);
+      await _instance!._storageAdapter.init();
+      await _instance!._syncAdapter.init(syncInterval, syncCallback);
+    } catch (e) {
+      ExceptionHandler.log('Logify initialization error: $e');
     }
-    
-    _instance ??= Logify._internal(storageAdapter, syncAdapter);
-    await _instance!._storageAdapter.init();
-    await _instance!._syncAdapter.init(syncInterval, syncCallback);
   }
 
   static void log({
@@ -60,7 +65,7 @@ class Logify {
         stackTraceParser.functionName,
       );
     } catch (e) {
-      rethrow;
+      ExceptionHandler.log('Logify log error: $e');
     }
   }
 
@@ -88,7 +93,7 @@ class Logify {
         stackTrace: stackTrace,
       );
     } catch (e) {
-      throw('Logify error: $e');
+      ExceptionHandler.log('Logify debug level log error: $e');
     }
   }
 
@@ -116,7 +121,7 @@ class Logify {
         stackTrace: stackTrace,
       );
     } catch (e) {
-      throw('Logify error: $e');
+      ExceptionHandler.log('Logify info level log error: $e');
     }
   }
 
@@ -144,7 +149,7 @@ class Logify {
         stackTrace: stackTrace,
       );
     } catch (e) {
-      throw('Logify error: $e');
+      ExceptionHandler.log('Logify warning level log error: $e');
     }
   }
 
@@ -172,7 +177,7 @@ class Logify {
         stackTrace: stackTrace,
       );
     } catch (e) {
-      throw('Logify error: $e');
+      ExceptionHandler.log('Logify error level log error: $e');
     }
   }
 
@@ -200,7 +205,7 @@ class Logify {
         stackTrace: stackTrace,
       );
     } catch (e) {
-      throw('Logify error: $e');
+      ExceptionHandler.log('Logify fatal level log error: $e');
     }
   }
 
@@ -211,7 +216,7 @@ class Logify {
         await _instance!._storageAdapter.init();
       }
     } catch (e) {
-      throw('Logify error: $e');
+      ExceptionHandler.log('Logify background sync task initialization error: $e');
     }
   }
 
@@ -225,7 +230,7 @@ class Logify {
         _instance!._syncAdapter.cloudSync(cloudAdapter);
       }
     } catch (e) {
-      throw('Logify error: $e');
+      ExceptionHandler.log('Logify logs sync error: $e');
     }
   }
 
@@ -237,7 +242,9 @@ class Logify {
       
       return await _instance!._storageAdapter.getOutOfSync();
     } catch (e) {
-      throw('Logify error: $e');
+      ExceptionHandler.log('Logify get out of sync logs error: $e');
+
+      return [];
     }
   }
 
@@ -249,7 +256,7 @@ class Logify {
       
       await _instance!._storageAdapter.updateAsSynced(logList);
     } catch (e) {
-      throw('Logify error: $e');
+      ExceptionHandler.log('Logify update as synced error: $e');
     }
   }
 
@@ -261,7 +268,7 @@ class Logify {
 
       await _instance!._storageAdapter.clearSynced();
     } catch (e) {
-      throw ('Logify error: $e');
+      ExceptionHandler.log('Logify clear synced logs error: $e');
     }
   }
 
@@ -273,7 +280,7 @@ class Logify {
 
       await _instance!._storageAdapter.close();
     } catch (e) {
-      throw ('Logify error: $e');
+      ExceptionHandler.log('Logify close database connection error: $e');
     }
   }
 }

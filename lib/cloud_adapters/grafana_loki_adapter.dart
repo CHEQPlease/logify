@@ -1,6 +1,7 @@
 import 'package:logify/interfaces/cloud_adapter.dart';
 import 'package:logify/models/log_list.dart';
 import 'package:logify/networking/api_helper.dart';
+import 'package:logify/utils/exception_handler.dart';
 
 class GrafanaLokiAdapter implements CloudAdapter {
   final String url;
@@ -16,7 +17,9 @@ class GrafanaLokiAdapter implements CloudAdapter {
 
       return Future.value(true);
     } catch (e) {
-      throw ('Sync failed - $e');
+      ExceptionHandler.log('Grafana sync failed - $e');
+
+      return Future.value(false);
     }
   }
 
@@ -24,7 +27,7 @@ class GrafanaLokiAdapter implements CloudAdapter {
     try {
       await ApiHelper().post(url, reqHeader, getReqBody(logList));
     } catch (e) {
-      rethrow;
+      ExceptionHandler.log('Grafana upload failed - $e');
     }
   }
 
@@ -32,28 +35,18 @@ class GrafanaLokiAdapter implements CloudAdapter {
     return {
       "streams": logList.map((log) {
         return {
-          "stream": {"app": env, "level": log.logLevel},
-          "values": [
-            [
-              '${DateTime.now().millisecondsSinceEpoch.toString().replaceRange(10, 13, '')}000000000',
-              {
-                "log": {
-                  'tag': log.tag,
-                  'msg': log.message,
-                  'exc': log.exc,
-                  'req': log.req,
-                  'res': log.res,
-                  'err': log.err,
-                  'props': log.props,
-                  'lvl': log.logLevel,
-                  'time': log.logTime,
-                  'file': log.fileName,
-                  'line': log.lineNumber,
-                  'func': log.functionName,
-                }
-              }
-            ]
-          ]
+          'tag': log.tag,
+          'msg': log.message,
+          'exc': log.exc,
+          'req': log.req,
+          'res': log.res,
+          'err': log.err,
+          'props': log.props,
+          'lvl': log.logLevel,
+          'time': log.logTime,
+          'file': log.fileName,
+          'line': log.lineNumber,
+          'func': log.functionName,
         };
       }).toList(),
     };

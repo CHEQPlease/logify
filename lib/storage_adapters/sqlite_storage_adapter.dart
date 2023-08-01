@@ -1,6 +1,7 @@
 import 'package:logify/enums/log_level_enum.dart';
 import 'package:logify/interfaces/storage_adapter.dart';
 import 'package:logify/models/log_list.dart';
+import 'package:logify/utils/exception_handler.dart';
 import 'package:logify/utils/json_helper.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart' as sql;
@@ -21,10 +22,14 @@ class SQLiteStorageAdapter implements StorageAdapter {
 
   @override
   Future<void> init() async {
-    _dbName = SQLiteConfig.dbName;
-    _logTableName = SQLiteConfig.logTableName;
+    try {
+      _dbName = SQLiteConfig.dbName;
+      _logTableName = SQLiteConfig.logTableName;
 
-    await open();
+      await open();
+    } catch (e) {
+      ExceptionHandler.log('SQLiteStorageAdapter initialization error: $e');
+    }
   }
 
   @override
@@ -40,7 +45,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
         version: 1,
       );
     } catch (e) {
-      throw ('Connection open - $e');
+      ExceptionHandler.log('SQLiteStorageAdapter connection open error: $e');
     }
   }
 
@@ -81,7 +86,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
       );
 
     } catch (e) {
-      throw ('Logify, SQLite - $e');
+      ExceptionHandler.log('SQLiteStorageAdapter data insert error: $e');
     }
   }
 
@@ -113,7 +118,9 @@ class SQLiteStorageAdapter implements StorageAdapter {
             isSynced: maps[i]['is_synced']);
       });
     } catch (e) {
-      throw ('Logify, SQLite - $e');
+      ExceptionHandler.log('SQLiteStorageAdapter get out of sync logs error: $e');
+
+      return [];
     }
   }
 
@@ -129,7 +136,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
 
       await _db.execute(query);
     } catch (e) {
-      throw ('Logify, SQLite - $e');
+      ExceptionHandler.log('SQLiteStorageAdapter update as synced logs error: $e');
     }
   }
 
@@ -138,7 +145,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
     try {
       await _db.delete(_logTableName);
     } catch (e) {
-      throw ('Logify, SQLite - $e');
+      ExceptionHandler.log('SQLiteStorageAdapter clear storage: $e');
     }
   }
 
@@ -147,7 +154,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
     try {
       await _db.delete(_logTableName, where: 'is_synced = ?', whereArgs: [1]);
     } catch (e) {
-      throw ('Logify, SQLite - $e');
+      ExceptionHandler.log('SQLiteStorageAdapter clear synced logs: $e');
     }
   }
 
@@ -156,7 +163,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
     try {
       await _db.close();
     } catch (e) {
-      throw ('Connection close - $e');
+      ExceptionHandler.log('SQLiteStorageAdapter close database connection: $e');
     }
   }
 }

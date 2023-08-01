@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:logify/interfaces/cloud_adapter.dart';
 import 'package:logify/models/log_list.dart';
+import 'package:logify/utils/exception_handler.dart';
 
 class FirebaseAdapter implements CloudAdapter {
   final String collectionName;
@@ -12,7 +13,7 @@ class FirebaseAdapter implements CloudAdapter {
     try {
       await Firebase.initializeApp();
     } catch (e) {
-      rethrow;
+      ExceptionHandler.log('Firebase initialization error: $e');
     }
   }
 
@@ -25,7 +26,9 @@ class FirebaseAdapter implements CloudAdapter {
 
       return Future.value(true);
     } catch (e) {
-      throw ('Sync failed - $e');
+      ExceptionHandler.log('Firebase sync failed: $e');
+
+      return Future.value(false);
     }
   }
 
@@ -44,10 +47,10 @@ class FirebaseAdapter implements CloudAdapter {
           .set(logSyncModel.toJson(), SetOptions(merge: false))
           .whenComplete(() async {})
           .catchError((e) {
-        throw e;
+        ExceptionHandler.log('Firebase upload failed: $e');
       });
     } catch (e) {
-      rethrow;
+      ExceptionHandler.log('Firebase error: $e');
     }
   }
 }
