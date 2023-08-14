@@ -32,7 +32,7 @@ class GrafanaLokiAdapter implements CloudAdapter {
 
   dynamic getReqBody(List<Log> logList) {
     return {
-      "streams": logList.map((log) {
+      "logs": logList.map((log) {
         return {
           'tag': log.tag,
           'msg': log.message,
@@ -41,7 +41,7 @@ class GrafanaLokiAdapter implements CloudAdapter {
           'res': log.res,
           'err': log.err,
           'props': log.props,
-          'lvl': log.logLevel,
+          'level': log.logLevel,
           'time': log.logTime,
           'file': log.fileName,
           'line': log.lineNumber,
