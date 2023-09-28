@@ -98,6 +98,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
         _logTableName,
         where: 'is_synced = ?',
         whereArgs: [0],
+        limit: 50,
       );
 
       return List.generate(maps.length, (i) {
