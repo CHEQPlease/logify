@@ -15,7 +15,7 @@ dependencies:
   android_alarm_manager_plus: ^2.1.1
   firebase_core: ^2.1.1
   cloud_firestore: ^4.0.4
-  http: ^0.13.5
+  http: ^1.1.0
   internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
