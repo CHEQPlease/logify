@@ -226,7 +226,8 @@ class Logify {
         throw('Logify is not initialized');
       }
 
-      if (await InternetConnectionChecker().hasConnection) {
+      final bool isConnected = await InternetConnectionChecker.instance.hasConnection;
+      if (isConnected) {
         _instance!._syncAdapter.cloudSync(cloudAdapter);
       }
     } catch (e) {
