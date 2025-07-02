@@ -1,11 +1,11 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/nahmed/fvm/versions/3.24.5
-FLUTTER_APPLICATION_PATH=/Volumes/Development/CHEQ/logify
+FLUTTER_ROOT=/Users/fahmed/Desktop/dev/flutter
+FLUTTER_APPLICATION_PATH=/Users/fahmed/StudioProjects/logify
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_TARGET=lib/main.dart
 FLUTTER_BUILD_DIR=build
-FLUTTER_BUILD_NAME=1.2.0
-FLUTTER_BUILD_NUMBER=1.2.0
+FLUTTER_BUILD_NAME=1.2.1
+FLUTTER_BUILD_NUMBER=120001
 EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386
 EXCLUDED_ARCHS[sdk=iphoneos*]=armv7
 DART_OBFUSCATION=false
