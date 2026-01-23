@@ -21,6 +21,7 @@ abstract class StorageAdapter {
     String fileName,
     String lineNumber,
     String functionName,
+    String stackTrace,
   );
   /// Get out of sync logs from the storage
   Future<List<Log>> getOutOfSync();
