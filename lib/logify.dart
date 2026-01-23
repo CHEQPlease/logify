@@ -63,6 +63,7 @@ class Logify {
         stackTraceParser.fileName,
         stackTraceParser.lineNumber,
         stackTraceParser.functionName,
+        stackTrace.toString(),
       );
     } catch (e) {
       ExceptionHandler.log('Logify log error: $e');

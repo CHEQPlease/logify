@@ -39,7 +39,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
         join(await sql.getDatabasesPath(), _dbName),
         onCreate: (db, version) {
           return db.execute(
-            'CREATE TABLE IF NOT EXISTS ${SQLiteConfig.logTableName} (id INTEGER PRIMARY KEY, tag TEXT, message TEXT, exc TEXT, req TEXT, res TEXT, err TEXT, props TEXT, log_level TEXT, log_time TEXT, file_name TEXT, line_number TEXT, function_name TEXT, is_synced INTEGER)',
+            'CREATE TABLE IF NOT EXISTS ${SQLiteConfig.logTableName} (id INTEGER PRIMARY KEY, tag TEXT, message TEXT, exc TEXT, req TEXT, res TEXT, err TEXT, props TEXT, log_level TEXT, log_time TEXT, file_name TEXT, line_number TEXT, function_name TEXT, stack_trace TEXT, is_synced INTEGER)',
           );
         },
         version: 1,
@@ -63,6 +63,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
     String fileName,
     String lineNumber,
     String functionName,
+    String stackTrace,
   ) async {
     try {
       await _db.insert(
@@ -80,6 +81,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
           'file_name': fileName,
           'line_number': lineNumber,
           'function_name': functionName,
+          'stack_trace': stackTrace,
           'is_synced': 0,
         },
         conflictAlgorithm: ConflictAlgorithm.replace,
@@ -116,6 +118,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
             fileName: maps[i]['file_name'],
             lineNumber: maps[i]['line_number'],
             functionName: maps[i]['function_name'],
+            stackTrace: maps[i]['stack_trace'],
             isSynced: maps[i]['is_synced']);
       });
     } catch (e) {

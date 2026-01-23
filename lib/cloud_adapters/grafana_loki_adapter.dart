@@ -46,8 +46,34 @@ class GrafanaLokiAdapter implements CloudAdapter {
           'file': log.fileName,
           'line': log.lineNumber,
           'func': log.functionName,
+          'stackTrace': flattenStackTraceToMap(log.stackTrace ?? ''),
         };
       }).toList(),
     };
+  }
+
+  dynamic flattenStackTraceToMap(String stackTrace) {
+    try {
+      final flattened = stackTrace.replaceAll('\n', ' ');
+
+      final parts = flattened.split(RegExp(r'(?=#\d+)'));
+
+      final Map<String, String> result = {};
+
+      for (final part in parts) {
+        final cleaned = part.replaceAll(RegExp(r'\s+'), ' ').trim();
+        if (cleaned.isEmpty) continue;
+
+        final match = RegExp(r'#(\d+)').firstMatch(cleaned);
+        if (match != null) {
+          final key = match.group(1)!; // "0", "1", etc.
+          result[key] = cleaned;
+        }
+      }
+
+      return result;
+    } catch (_) {
+      return stackTrace.toString();
+    }
   }
 }

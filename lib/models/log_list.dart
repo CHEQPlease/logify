@@ -18,6 +18,7 @@ class Log {
   String? fileName;
   String? lineNumber;
   String? functionName;
+  String? stackTrace;
   int? isSynced;
 
   Log({
@@ -34,6 +35,7 @@ class Log {
     this.fileName,
     this.lineNumber,
     this.functionName,
+    this.stackTrace,
     this.isSynced,
   });
 
@@ -51,6 +53,7 @@ class Log {
       'fileName': fileName,
       'lineNumber': lineNumber,
       'functionName': functionName,
+      'stackTrace': stackTrace,
     };
   }
 }
