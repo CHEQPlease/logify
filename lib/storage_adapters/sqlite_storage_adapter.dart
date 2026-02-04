@@ -9,7 +9,7 @@ import 'package:sqflite/sqlite_api.dart';
 
 class SQLiteStorageAdapter implements StorageAdapter {
   static final SQLiteStorageAdapter _instance = SQLiteStorageAdapter._internal();
-
+  static const int _dbVersion = 2;
   late final String _dbName;
   late final String _logTableName;
   late sql.Database _db;
@@ -37,12 +37,19 @@ class SQLiteStorageAdapter implements StorageAdapter {
     try {
       _db = await sql.openDatabase(
         join(await sql.getDatabasesPath(), _dbName),
+        version: _dbVersion,
         onCreate: (db, version) {
           return db.execute(
             'CREATE TABLE IF NOT EXISTS ${SQLiteConfig.logTableName} (id INTEGER PRIMARY KEY, tag TEXT, message TEXT, exc TEXT, req TEXT, res TEXT, err TEXT, props TEXT, log_level TEXT, log_time TEXT, file_name TEXT, line_number TEXT, function_name TEXT, stack_trace TEXT, is_synced INTEGER)',
           );
         },
-        version: 1,
+        onUpgrade: (db, oldVersion, newVersion) async {
+          if (oldVersion < 2) {
+            await db.execute(
+              'ALTER TABLE ${SQLiteConfig.logTableName} ADD COLUMN stack_trace TEXT',
+            );
+          }
+        },
       );
     } catch (e) {
       ExceptionHandler.log('SQLiteStorageAdapter connection open error: $e');
@@ -132,7 +139,7 @@ class SQLiteStorageAdapter implements StorageAdapter {
   Future<void> updateAsSynced(List<Log>? logList) async {
     try {
       if (logList == null || logList.isEmpty) return;
-      
+
       RangeIndex range = RangeIndex(logList.first.id.toString(), logList.last.id.toString());
 
       final String query =
